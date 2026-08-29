@@ -35,7 +35,7 @@ npm install -g .      # 本地全局安装测试
 - `apiBaseUrl`（默认 `https://open.bigmodel.cn/api/anthropic`）
 - `apiKey`（智谱 BigModel key，必须）
 - `model`（默认 `glm-5.1`）
-- `maxTokens` / `contextWindow`（默认 192000）/ `temperature`
+- `maxTokens` / `contextWindow` / `temperature`（数值以 `config.example.json` 为准；注意智谱端点 max_tokens 上限 131072，超出返回 400 [1210]）
 - web 工具：`webSearchEngine`（默认 `search_std`）/ `webSearchContentSize`（`medium`）/ `webSearchCount`（10）/ `webResultMaxChars`（30000）/ `webApiKey`（可选，默认复用 `apiKey`）
 - 权限管控：`permissions` = `{ deny: [{pattern, mode?, reason?}], confirm: [...] }`（`mode` 默认前缀匹配，`'regex'` 为正则）。**内置 deny 黑名单**（`rm -rf /`、`mkfs`、dd 写块设备、fork bomb、关机重启等）见 `src/permissions.ts`，命中直接拒绝不弹框；`confirm` 命中弹交互确认（`y`=本次允许 / `a`=允许并记住 / `n`=拒绝）。「记住的允许」持久化在 `~/.leow3bot/permissions.json`（想撤销某条直接删对应行）；判定顺序：内置 deny → 自定义 deny → 记住的允许 → 自定义 confirm → allow
 

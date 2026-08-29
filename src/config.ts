@@ -59,7 +59,7 @@ const cfg = loadConfig();
 export const API_BASE_URL = cfg.apiBaseUrl ?? 'https://open.bigmodel.cn/api/anthropic';
 export const API_KEY = cfg.apiKey ?? '';
 export const MODEL = cfg.model ?? 'glm-5.1';
-export const MAX_TOKENS = cfg.maxTokens ?? 192000;
+export const MAX_TOKENS = cfg.maxTokens ?? 131072; // 智谱 Anthropic 端点 max_tokens 上限 131072,超出返回 400 [1210]
 export const CONTEXT_WINDOW = cfg.contextWindow ?? 192000;
 export const TEMPERATURE = cfg.temperature ?? 0.7;
 

@@ -2,7 +2,7 @@
   "apiBaseUrl": "https://open.bigmodel.cn/api/anthropic",
   "apiKey": "your-api-key-here",
   "model": "glm-5.1",
-  "maxTokens": 192000,
+  "maxTokens": 131072,
   "contextWindow": 192000,
   "temperature": 0.7,
   "webSearchEngine": "search_std",
