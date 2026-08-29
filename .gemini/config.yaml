@@ -1,0 +1,23 @@
+# Gemini Code Assist（PR 自动审核）行为配置
+# 文档：https://docs.cloud.google.com/gemini/docs/code-review/customize-repo-review
+have_fun: false
+
+code_review:
+  # 低于该严重级的评论不发出（LOW < MEDIUM < HIGH < CRITICAL）
+  comment_severity_threshold: MEDIUM
+  # 单个 PR 最多评论数，防止刷屏
+  max_review_comments: 20
+  pull_request_opened:
+    # PR 打开时自动生成改动摘要
+    summary: true
+    # 自动发起代码评审
+    code_review: true
+    # 草稿 PR 不审（还在改，审了也是浪费）
+    include_drafts: false
+
+# 不评审的路径（lock 文件与产物是纯噪音）
+ignore_paths:
+  - package-lock.json
+  - dist/
+  - docs/
+  - "*.svg"
