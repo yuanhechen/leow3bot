@@ -32,7 +32,8 @@
     "test:app": "FORCE_COLOR=1 tsx src/scripts/test-app.tsx",
     "test:store": "tsx src/scripts/test-store.ts",
     "test:perm": "tsx src/scripts/test-permissions.ts",
-    "test": "tsc --noEmit && npm run test:md && npm run test:store && npm run test:perm && npm run test:app"
+    "test:skills": "tsx src/scripts/test-skills.ts",
+    "test": "tsc --noEmit && npm run test:md && npm run test:store && npm run test:perm && npm run test:skills && npm run test:app"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.50.1",

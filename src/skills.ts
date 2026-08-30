@@ -59,7 +59,15 @@ function loadSkillsFromDir(dir: string): void {
 function loadSkillFile(md: string, fallback: string): void {
   let raw: string;
   try { raw = readFileSync(md, 'utf-8'); } catch { return; }
-  const { data, content } = matter(raw); // gray-matter 解析 frontmatter（兼容社区 SKILL.md 全字段）
+  let parsed: ReturnType<typeof matter>;
+  try {
+    parsed = matter(raw); // gray-matter 解析 frontmatter（兼容社区 SKILL.md 全字段）
+  } catch (e) {
+    const reason = e instanceof Error ? e.message : String(e);
+    process.stderr.write(`⚠️ 跳过无效 skill ${md}: ${reason}\n`);
+    return;
+  }
+  const { data, content } = parsed;
   const n = (data.name as string) || fallback;
   SKILLS_REGISTRY.set(n, {
     name: n,
