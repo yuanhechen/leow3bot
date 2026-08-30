@@ -28,6 +28,8 @@
     "prepublishOnly": "npm run build",
     "probe": "tsx src/scripts/probe.ts",
     "typecheck": "tsc --noEmit",
+    "docs:dev": "vitepress dev docs-src",
+    "docs:build": "vitepress build docs-src && rm -rf docs/docs && cp -R docs-src/.vitepress/dist docs/docs",
     "test:md": "FORCE_COLOR=1 tsx src/scripts/test-markdown.tsx",
     "test:app": "FORCE_COLOR=1 tsx src/scripts/test-app.tsx",
     "test:store": "tsx src/scripts/test-store.ts",
@@ -52,7 +54,8 @@
     "ink-testing-library": "^4.0.0",
     "tsup": "^8.5.1",
     "tsx": "^4.22.4",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitepress": "^1.6.4"
   },
   "license": "Apache-2.0",
   "keywords": [

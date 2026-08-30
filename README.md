@@ -10,7 +10,7 @@
 [![CI](https://github.com/yuanhechen/leow3bot/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yuanhechen/leow3bot/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-**[官网与场景演示](https://leow3bot.com)** · **[用户指南](docs/guide.md)** · **[贡献指南](AGENTS.md)**
+**[官网与场景演示](https://leow3bot.com)** · **[文档站](https://leow3bot.com/docs/)** · **[贡献指南](AGENTS.md)**
 
 TypeScript + ink 构建 · 全程流式输出
 
@@ -42,7 +42,7 @@ TypeScript + ink 构建 · 全程流式输出
 | 「看看这张截图哪有 bug」 | 视觉查看图片（Ctrl-V 粘贴剪贴板截图） |
 | 「读一下这份 PDF」 | PDF skill 自动分类：文字型提取为文本，扫描件渲染逐页识别 |
 
-完整命令表、快捷键、skill 配置见 **[用户指南](docs/guide.md)**。
+完整命令表、快捷键、skill 配置见 **[文档站](https://leow3bot.com/docs/)**。
 
 ## 三行跑起来
 

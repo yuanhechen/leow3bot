@@ -51,3 +51,7 @@ skills/
 
 # 项目指引（本地开发资产，不入公共仓库）
 CLAUDE.md
+
+# VitePress 文档站构建产物（发布副本在 docs/docs/）
+docs-src/.vitepress/cache/
+docs-src/.vitepress/dist/

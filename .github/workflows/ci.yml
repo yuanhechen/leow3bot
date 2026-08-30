@@ -38,3 +38,7 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # 文档站构建（vitepress：docs-src → docs/docs），防配置漂移
+      - name: Docs build
+        run: npx vitepress build docs-src
