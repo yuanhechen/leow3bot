@@ -63,13 +63,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;padding:0;col
 .nav-links{display:flex;align-items:center;gap:30px}
 .nav-links > a{font-size:14px;color:var(--copy);transition:color .15s ease}
 .nav-links > a:hover{color:var(--ink)}
-.nav-pill{
-  background:#111114;color:#fff;font-size:14px;font-weight:500;
-  border-radius:999px;padding:9px 18px;
-  transition:background-color .2s ease,transform .15s ease;
-}
-.nav-pill:hover{background:#000}
-.nav-pill:active{transform:scale(.97)}
 
 /* ---------- 两屏公共 ---------- */
 .screen{
@@ -305,7 +298,9 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;padding:0;col
   .desk-decor{display:none}
 }
 @media (max-width:700px){
-  .nav-links > a:not(.nav-pill){display:none}
+  .nav{padding:0 16px}
+  .nav-links{gap:16px}
+  .nav-links > a{font-size:13px}
   .screen{min-height:auto;padding:64px 20px 56px}
   .screen-install{padding-top:84px}
   .usecases{margin-top:60px}
