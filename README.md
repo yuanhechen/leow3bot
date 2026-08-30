@@ -3,6 +3,10 @@
 [![CI](https://github.com/yuanhechen/leow3bot/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yuanhechen/leow3bot/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
+[![leow3bot.com — 官网首屏](docs/assets/site-hero.png)](https://leow3bot.com)
+
+> **[官网与场景演示 → leow3bot.com](https://leow3bot.com)**
+
 终端里的 AI 编程助手——TypeScript + ink 构建，连接智谱 BigModel（glm-5.x）。自然语言下达任务，它自主调用工具完成：读写文件、执行命令、查看图片、联网搜索，全程流式输出。
 
 ## 安装
