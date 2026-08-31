@@ -20,7 +20,58 @@ export const LOGO = [
 export const COMMANDS = [
   'help', 'clear', 'compact', 'tools', 'skills', 'model', 'subagent', 'history',
   'perf', 'verbose', 'context', 'status', 'save', 'load', 'sessions', 'q',
-];
+] as const;
+
+export type CommandName = typeof COMMANDS[number];
+
+export const COMMAND_DESCRIPTIONS: Record<CommandName, string> = {
+  help: '显示这份帮助',
+  clear: '清空当前对话',
+  compact: '压缩历史内容，释放上下文',
+  tools: '查看模型可以调用的工具',
+  skills: '启用或禁用 skills',
+  model: '选择或切换模型',
+  subagent: '选择子代理模型',
+  history: '查看当前对话的历史摘要',
+  perf: '开关性能状态栏',
+  verbose: '展开或折叠模型思考过程',
+  context: '开关上下文状态栏并统计 token',
+  status: '查看状态栏使用提示',
+  save: '保存当前会话快照',
+  load: '加载已保存的会话',
+  sessions: '列出已保存的会话',
+  q: '退出 leow3bot',
+};
+
+const HELP_TEXT = [
+  '可用命令',
+  '',
+  '对话与上下文',
+  '  /clear                 清空当前对话',
+  '  /history               查看当前对话的历史摘要',
+  '  /compact               压缩图片和旧工具结果，释放上下文',
+  '',
+  '模型与能力',
+  '  /model [模型名]        选择模型；带名称可直接切换',
+  '  /subagent              选择子代理模型；首项「跟随主模型」恢复继承',
+  '  /tools                 查看模型可以调用的工具',
+  '  /skills                启用或禁用 skills',
+  '',
+  '会话管理',
+  '  /save [名称]           保存当前会话快照',
+  '  /load [文件名或序号]   加载已保存的会话',
+  '  /sessions              列出已保存的会话',
+  '',
+  '显示与诊断',
+  '  /context               开关上下文状态栏，并显示 token 明细',
+  '  /perf                  开关性能状态栏',
+  '  /verbose               展开或折叠模型思考过程',
+  '  /status                查看状态栏使用提示',
+  '',
+  '其他',
+  '  /help                  显示这份帮助',
+  '  /q                     退出 leow3bot',
+].join('\n');
 
 export function parseCommand(text: string): { cmd: string; args: string[] } | null {
   const t = text.trim();
@@ -62,7 +113,7 @@ export async function handleCommand(cmd: string, args: string[], ctx: CmdCtx): P
     case 'exit':
       return { exit: true };
     case 'help':
-      return { output: '可用命令:  ' + COMMANDS.map(c => '/' + c).join('  '), tone: 'muted' };
+      return { output: HELP_TEXT, tone: 'muted' };
     case 'context': {
       ctx.toggleCtx();
       const sys = getSystem();

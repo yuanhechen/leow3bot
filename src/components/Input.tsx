@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import { Box, Text, useInput } from 'ink';
 import TextInput from 'ink-text-input';
 import { SYM_USER, ACCENT, PASTE_PERSIST_CHARS } from '../config.js';
-import { COMMANDS } from '../commands.js';
+import { COMMANDS, COMMAND_DESCRIPTIONS } from '../commands.js';
 import { getClipboardImage } from '../clipboard.js';
 import { compressImage } from '../tools.js';
 import { getState, setAskResolver } from '../store.js';
@@ -14,6 +14,8 @@ interface Props {
   onSubmit: (text: string, images: PastedImg[]) => void;
   promptLabel?: string; // ask 模式自定义前缀
 }
+
+const COMMAND_WINDOW = 6;
 
 // 输入框 + Tab 命令补全 + Ctrl-V 粘贴剪贴板图片 + 大段文本粘贴折叠 + ask 模式 resolve。
 // ESC 中断流式在 App.tsx 全局处理。
@@ -39,8 +41,26 @@ export default function Input({ onSubmit, promptLabel }: Props) {
     return [];
   }, [value, isAsk]);
 
+  const selectedIdx = matches.length > 0
+    ? Math.min(Math.max(compIdx, 0), matches.length - 1)
+    : -1;
+  const windowStart = selectedIdx >= 0
+    ? Math.max(0, Math.min(selectedIdx - 2, matches.length - COMMAND_WINDOW))
+    : 0;
+  const visibleMatches = matches.slice(windowStart, windowStart + COMMAND_WINDOW);
+
   useInput((input, key) => {
-    if (key.tab && matches.length) {
+    if (key.upArrow && matches.length) {
+      setCompIdx(i => {
+        const current = i >= 0 ? i : 0;
+        return (current - 1 + matches.length) % matches.length;
+      });
+    } else if (key.downArrow && matches.length) {
+      setCompIdx(i => {
+        const current = i >= 0 ? i : 0;
+        return (current + 1) % matches.length;
+      });
+    } else if (key.tab && matches.length) {
       setCompIdx(i => {
         const next = (i + 1) % matches.length;
         setValue('/' + matches[next]); // Tab 即时补全到输入框
@@ -90,8 +110,8 @@ export default function Input({ onSubmit, promptLabel }: Props) {
   }
 
   const submit = () => {
-    const useComp = compIdx >= 0 && matches.length > 0 && !isAsk;
-    const raw = useComp ? '/' + matches[compIdx] : value;
+    const useComp = selectedIdx >= 0 && value.startsWith('/') && !value.includes(' ') && !isAsk;
+    const raw = useComp ? '/' + matches[selectedIdx] : value;
     setValue('');
     setCompIdx(-1);
     if (!raw.trim()) { clearAttachments(); return; }
@@ -146,12 +166,26 @@ export default function Input({ onSubmit, promptLabel }: Props) {
         />
       </Box>
       {matches.length > 0 ? (
-        <Box flexDirection="column" marginLeft={2}>
-          {matches.slice(0, 8).map((c, i) => (
-            <Text key={c} color={i === compIdx ? ACCENT : undefined} bold={i === compIdx}>
-              {i === compIdx ? '▶ ' : '  '}/{c}
-            </Text>
-          ))}
+        <Box flexDirection="column" marginLeft={2} marginTop={1}>
+          <Text dimColor>
+            命令 {selectedIdx + 1}/{matches.length} · ↑↓ 选择 · Tab 补全 · Enter 执行
+          </Text>
+          {windowStart > 0 ? <Text dimColor>  ↑ 更多</Text> : null}
+          {visibleMatches.map((c, i) => {
+            const realIdx = windowStart + i;
+            const selected = realIdx === selectedIdx;
+            return (
+              <Box key={c}>
+                <Box width={14}>
+                  <Text color={selected ? ACCENT : undefined} bold={selected} dimColor={!selected}>
+                    {selected ? '▶ ' : '  '}/{c}
+                  </Text>
+                </Box>
+                <Text dimColor={!selected}>{COMMAND_DESCRIPTIONS[c]}</Text>
+              </Box>
+            );
+          })}
+          {windowStart + COMMAND_WINDOW < matches.length ? <Text dimColor>  ↓ 更多</Text> : null}
         </Box>
       ) : null}
       {feedback ? <Box marginLeft={2}><Text dimColor>{feedback}</Text></Box> : null}
